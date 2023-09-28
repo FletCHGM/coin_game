@@ -58,78 +58,89 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Spin the coin!',
-          ),
-        ),
-      ),
-      body: SafeArea(
-          child: Stack(children: [
-        AnimatedPositioned(
-          top: up ? heigth(5) : heigth(40),
-          left: width(20),
-          right: width(20),
-          duration: up
-              ? const Duration(milliseconds: 1000)
-              : const Duration(milliseconds: 1500),
-          curve: up ? Curves.bounceIn : Curves.bounceOut,
-          onEnd: () {
-            setState(() {
-              up = false;
-              spinning++;
-            });
-          },
-          child: SizedBox(
-            height: width(60),
-            width: width(60),
-            child: ListWheelScrollView.useDelegate(
-              physics: const FixedExtentScrollPhysics(),
-              itemExtent: width(60),
-              diameterRatio: 0.0000000000000001,
-              controller: _scrollController,
-              childDelegate: ListWheelChildLoopingListDelegate(children: [
-                SizedBox(
-                  height: width(50),
-                  width: width(50),
-                  child: Image.asset(_coin[0]!),
-                ),
-                SizedBox(
-                  height: width(50),
-                  width: width(50),
-                  child: Image.asset(_coin[1]!),
-                ),
-              ]),
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/back1.jpg'), fit: BoxFit.cover)),
+      child: Scaffold(
+        backgroundColor: Colors.black12,
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(196, 64, 64, 64),
+          title: const Center(
+            child: Text(
+              'Spin the coin!',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 255, 0, 0),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
-        Positioned(
-            bottom: heigth(10),
-            left: width(10),
-            right: width(10),
-            child: ElevatedButton(
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.black),
-                ),
-                onPressed: () {
-                  if (spinning == 2) {
-                    setState(() {
-                      up = true;
-                      spinning = 0;
-                    });
-                    _start();
-                  }
-                },
-                child: const Text(
-                  'SPIN!',
-                  style: TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold),
-                )))
-      ])),
+        body: SafeArea(
+            child: Stack(children: [
+          AnimatedPositioned(
+            top: up ? heigth(5) : heigth(40),
+            left: width(20),
+            right: width(20),
+            duration: up
+                ? const Duration(milliseconds: 1000)
+                : const Duration(milliseconds: 1500),
+            curve: up ? Curves.bounceIn : Curves.bounceOut,
+            onEnd: () {
+              setState(() {
+                up = false;
+                spinning++;
+              });
+            },
+            child: SizedBox(
+              height: width(60),
+              width: width(60),
+              child: ListWheelScrollView.useDelegate(
+                physics: const FixedExtentScrollPhysics(),
+                itemExtent: width(60),
+                diameterRatio: 0.0000000000000001,
+                controller: _scrollController,
+                childDelegate: ListWheelChildLoopingListDelegate(children: [
+                  SizedBox(
+                    height: width(50),
+                    width: width(50),
+                    child: Image.asset(_coin[0]!),
+                  ),
+                  SizedBox(
+                    height: width(50),
+                    width: width(50),
+                    child: Image.asset(_coin[1]!),
+                  ),
+                ]),
+              ),
+            ),
+          ),
+          Positioned(
+              bottom: heigth(10),
+              left: width(10),
+              right: width(10),
+              child: ElevatedButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.black),
+                  ),
+                  onPressed: () {
+                    if (spinning == 2) {
+                      setState(() {
+                        up = true;
+                        spinning = 0;
+                      });
+                      _start();
+                    }
+                  },
+                  child: const Text(
+                    'SPIN!',
+                    style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
+                  )))
+        ])),
+      ),
     );
   }
 }
